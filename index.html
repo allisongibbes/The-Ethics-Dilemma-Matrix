@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ethics Dilemma Matrix</title>
+    <style>
+        body {
+            background-color: #22272e;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            color: #f1e800;
+            margin-bottom: 5px;
+        }
+        p.instructions {
+            color: #adbac7;
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 600px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 700px;
+            background-color: #2d333b;
+            border: 2px solid #444c56;
+            border-radius: 8px;
+            padding: 20px;
+            gap: 20px;
+        }
+        .scenario-box {
+            background-color: #1c2128;
+            border: 2px solid #f1e800;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        .scenario-title {
+            color: #f1e800;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .scenario-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .choices-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .choice-btn {
+            background-color: #444c56;
+            color: #ffffff;
+            border: 2px solid transparent;
+            padding: 14px 18px;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .choice-btn:hover {
+            background-color: #373e47;
+            border-color: #f1e800;
+        }
+        .feedback-box {
+            background-color: #373e47;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #f1e800;
+            display: none;
+        }
+        .feedback-box h4 {
+            margin: 0 0 8px 0;
+            color: #f1e800;
+        }
+        .feedback-box p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .next-btn {
+            background-color: #f1e800;
+            color: #22272e;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            align-self: center;
+            margin-top: 10px;
+            display: none;
+        }
+        .next-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>The Ethics Dilemma Matrix</h2>
+    <p class="instructions">Step into the director's chair. Make difficult ethical choices regarding participant consent and historical reenactments.</p>
+
+    <div class="container">
+        <!-- Scenario Display -->
+        <div class="scenario-box">
+            <div id="scenario-counter" class="scenario-title">Scenario 1 of 3</div>
+            <p id="scenario-text" class="scenario-text">Loading scenario...</p>
+        </div>
+
+        <!-- Choices -->
+        <div id="choices-container" class="choices-group">
+            <!-- Buttons injected via JS -->
+        </div>
+
+        <!-- Feedback / Consequence -->
+        <div id="feedback-box" class="feedback-box">
+            <h4 id="feedback-title">Ethical Implication</h4>
+            <p id="feedback-text"></p>
+        </div>
+
+        <button id="next-btn" class="next-btn" onclick="nextScenario()">Next Scenario</button>
+    </div>
+
+    <script>
+        const scenarios = [
+            {
+                title: "Scenario 1: Participant Consent under Distress",
+                text: "Your key documentary subject breaks down in tears during an intense interview about personal trauma. They ask you to stop filming and delete the tape. However, this is the emotional climax of your film's argument about institutional neglect.",
+                choices: [
+                    {
+                        text: "A) Honor their request immediately, stop filming, and delete the footage.",
+                        feedback: "Ethical & Protective: Prioritizing the psychological safety and well-being of your human subject over the commercial or narrative demands of the film preserves trust and human dignity."
+                    },
+                    {
+                        text: "B) Continue filming secretly or convince them to let you keep the footage for the greater good.",
+                        feedback: "Ethical Violation: Exploiting a subject's vulnerability in distress crosses the line into psychological exploitation, violating informed consent and standard documentary ethics."
+                    }
+                ]
+            },
+            {
+                title: "Scenario 2: The Ambiguous Reenactment",
+                text: "You are producing a historical documentary about a pivotal 19th-century confrontation. No audio or video footage exists of the exact moment. Do you stage a dramatic reenactment with professional actors?",
+                choices: [
+                    {
+                        text: "A) Stage the reenactment with actors, professional lighting, and cinematic scoring without adding on-screen labels.",
+                        feedback: "Deceptive Framing: Presenting dramatic fiction as historical fact blurs the line between documentary and historical drama, misleading viewers into treating speculation as objective truth."
+                    },
+                    {
+                        text: "B) Stage the reenactment but explicitly mark it with a clear on-screen 'RECREATION' graphic or contextual framing.",
+                        feedback: "Transparent & Responsible: Acknowledging creative interventions explicitly allows filmmakers to utilize dramatic illustration while maintaining intellectual honesty with the audience."
+                    }
+                ]
+            },
+            {
+                title: "Scenario 3: Archival Context Manipulation",
+                text: "To heighten the dramatic stakes of your investigative film about corporate greed, you take archival footage of a CEO looking bewildered at a press conference and place it immediately after a statistic about industrial accidents.",
+                choices: [
+                    {
+                        text: "A) Keep the edit. It creates a powerful emotional reaction and highlights corporate negligence effectively.",
+                        feedback: "Manipulative Editing: Out-of-context juxtaposition alters the original meaning of archival artifacts, manufacturing a false emotional narrative akin to propaganda."
+                    },
+                    {
+                        text: "B) Discard the edit. Ensure archival materials remain true to their original temporal and situational context.",
+                        feedback: "Journalistic Integrity: Preserving archival context ensures that historical artifacts are used as authentic evidence rather than tools for manufactured emotional manipulation."
+                    }
+                ]
+            }
+        ];
+
+        let currentScenario = 0;
+
+        function loadScenario() {
+            const s = scenarios[currentScenario];
+            document.getElementById('scenario-counter').innerText = `Scenario ${currentScenario + 1} of ${scenarios.length}`;
+            document.getElementById('scenario-text').innerText = s.text;
+            
+            const container = document.getElementById('choices-container');
+            container.innerHTML = '';
+            
+            s.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerText = choice.text;
+                btn.onclick = () => selectChoice(index);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('feedback-box').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function selectChoice(index) {
+            const s = scenarios[currentScenario];
+            const choice = s.choices[index];
+
+            document.getElementById('feedback-text').innerText = choice.feedback;
+            document.getElementById('feedback-box').style.display = 'block';
+
+            // Disable all choice buttons after selection
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            // Show next button or finish
+            if (currentScenario < scenarios.length - 1) {
+                document.getElementById('next-btn').style.display = 'block';
+            } else {
+                document.getElementById('next-btn').innerText = 'Restart Matrix';
+                document.getElementById('next-btn').style.display = 'block';
+            }
+        }
+
+        function nextScenario() {
+            currentScenario++;
+            if (currentScenario >= scenarios.length) {
+                currentScenario = 0;
+                document.getElementById('next-btn').innerText = 'Next Scenario';
+            }
+            loadScenario();
+        }
+
+        window.onload = loadScenario;
+    </script>
+</body>
+</html>
